@@ -14,6 +14,10 @@ for line in fin:
 fin = open("businesses.txt", "r", encoding = "utf8");
 cnt = 0;
 item = {}
+
+user_map = {}
+item_map = {}
+
 for line in fin:
 	ff = line.split('^');
 	word = "";
@@ -25,19 +29,11 @@ for line in fin:
 			item[tmp["0"]] = tmp ["2"];
 	cnt += 1;
 
-user_map = {}
-item_map = {}
-
 fin = open("reviews.txt", "r", encoding = "utf8");
-fout_rate = {};
-fout_feature = {};
-for city in citys:
-	fout_rate[int(city)] = (open("city_rate\\" + str(city) + "_rate.txt", "w"));
-	fout_feature[int(city)] = (open("city_feature\\" + str(city) +"-feature.txt", "w"));
+fout_rate = open("rate_all.txt", "w");
+fout_feature = open("feature_all.txt", "w");
 jsondist = [];
 cnt = 0;
-city_feature = {};
-city_cnt = {};
 cnt2 = 0;
 print (len(item));
 for line in fin:
@@ -53,11 +49,14 @@ for line in fin:
 			review = tmp["content"];
 			if (tmp["rate"] == -1):
 				continue;
-			fout_rate[int(city)].write(str(user_map[tmp["userId"]]) + "\t" + str(item_map[tmp["restId"]]) + "\t" + str(tmp["rate"]) + '\n');
-			
+			if (not (tmp["userId"] in user_map)):
+				user_map[tmp["userId"]] = len(user_map);
+			if (not (tmp["restId"] in item_map)):
+				item_map[tmp["restId"]] = len(item_map);
+			fout_rate.write(str(user_map[tmp["userId"]]) + "\t" + str(item_map[tmp["restId"]]) + "\t" + str(tmp["rate"]) + '\n');
 			for w in lexicon.keys():
 				if (w in review):
-					fout_feature[int(city)].write(str(user_map[tmp["userId"]]) + "\t" + str(item_map[tmp["restId"]]) + "\t" + str(lexicon[w]) + '\n');
+					fout_feature.write(str(user_map[tmp["userId"]]) + "\t" + str(item_map[tmp["restId"]]) + "\t" + str(lexicon[w]) + '\n');
 			
 		else:
 			cnt2 +=1;
@@ -65,6 +64,3 @@ for line in fin:
 		print(str(cnt)+" "+str(cnt2));
 	cnt += 1;
 print("cnt2:"+str(cnt));
-for city in citys:
-	fout_rate[int(city)].flush();
-	fout_feature[int(city)].flush();

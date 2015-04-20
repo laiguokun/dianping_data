@@ -6,7 +6,7 @@ for line in fin:
 	citys.append(words[1]);
 
 for city in citys:
-	fname = "city_feature\\" + city + "-feature.txt";
+	fname = "city_feature\\" + city + "_train_feature.txt";
 	fin = open(fname, "r");
 	user_feature = {};
 	item_feature = {};

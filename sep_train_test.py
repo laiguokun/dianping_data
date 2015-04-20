@@ -27,7 +27,7 @@ for city in citys:
 	fname = "city_feature\\" + city + "-feature.txt";
 	fin = open(fname, "r");
 	fname = "city_feature\\" + city + "_train_feature.txt";
-	fout = open(fanme, "w");
+	fout = open(fname, "w");
 	for line in fin:
 		words = line[0:-1].split("\t");
 		user = int(words[0]);
