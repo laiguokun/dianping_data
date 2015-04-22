@@ -53,6 +53,10 @@ for line in fin:
 			review = tmp["content"];
 			if (tmp["rate"] == -1):
 				continue;
+			if (not (tmp["userId"] in user_map)):
+				user_map[tmp["userId"]] = len(user_map);
+			if (not (tmp["restId"] in item_map)):
+				item_map[tmp["restId"]] = len(item_map);
 			fout_rate[int(city)].write(str(user_map[tmp["userId"]]) + "\t" + str(item_map[tmp["restId"]]) + "\t" + str(tmp["rate"]) + '\n');
 			
 			for w in lexicon.keys():
