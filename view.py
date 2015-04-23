@@ -37,9 +37,10 @@ for line in fin:
 		id = str(tmp["restId"]);
 		if (id in item.keys()):		
 			city = item[id];
-			if (city == 397):
-				print(tmp["content"]);
-				fout.write(tmp["content"]+'\n');
-	if (cnt % 10000 == 0):
+			fout.write(tmp["content"]+'\n');
+	if (cnt % 100 == 0):
 		print(str(cnt));
+		if (cnt >= 100):
+			break;
 	cnt += 1;
+fout.flush();
