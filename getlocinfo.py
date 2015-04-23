@@ -38,6 +38,7 @@ jsondist = [];
 cnt = 0;
 cnt2 = 0;
 print (len(item));
+city_cnt = {};
 for line in fin:
 	ff = line.split('^');
 	word = "";
@@ -64,10 +65,15 @@ for line in fin:
 			user_home[user][city] += 1; 
 			if (not (items in item_home)):
 				item_home [items] = city;
+			line = str(user_map[tmp["userId"]]) + "\t" + str(item_map[tmp["restId"]]) + "\t" +str(tmp["rate"]) +'\t' +str(city);
 			for w in lexicon.keys():
 				if (w in review):
-					fout_feature.write(str(user_map[tmp["userId"]]) + "\t" + str(item_map[tmp["restId"]]) + "\t" + str(lexicon[w]) + "\t" + str(city) + '\n');
-			
+					line += "\t" + str(lexicon[w]);
+			line +='\n';
+			fout_feature.write(line);
+			if (not(city in city_cnt)):
+				city_cnt[city] = 0;
+			city_cnt[city] +=1;
 		else:
 			cnt2 +=1;
 	if (cnt % 10000 == 0):
@@ -75,17 +81,10 @@ for line in fin:
 	cnt += 1;
 print("cnt2:"+str(cnt));
 
-fout= open("user_home.txt","w");
-cnt = 0;
-for user in user_home.keys():
-	max = 0;
-	max_aug = 0;
-	for city in user_home[user].keys():
-		if (user_home[user][city] > max):
-			max = user_home[user][city];
-			max_aug = city;
-	fout.write(str(user) + '\t' + str(max_aug) + '\n');
 fout= open("item_home.txt", "w");
 for item in item_home.keys():
 	fout.write(str(item) + '\t' + str(item_home[item]) + '\n');
+fout = open("city_cnt.txt", 'w');
+for city in city_cnt.keys():
+	fout.write(str(city) + '\t' + str(city_cnt[city]) + '\n');
 print(cnt);

@@ -44,9 +44,13 @@ for line in fin:
 		if (id in item.keys()):		
 			city = item[id];
 			review = tmp["content"];
+			if (tmp["rate"] == -1):
+				continue;
 			if (not(city in city_cnt)):
 				city_cnt[city] = 0;
 			city_cnt[city] += 1;
+			if (city != '319'):
+				continue;
 			for w in lexicon.keys():
 				if (w in review):
 					if (not (city in city_feature)):
@@ -61,13 +65,13 @@ for line in fin:
 	cnt += 1;
 print("cnt2:"+str(cnt));
 realcity = []
-for city in city_feature.keys():
-	if (city_cnt[city] < 1000):
-		continue;
-	realcity.append(city);
-	for feature in city_feature[city].keys():
-		line = str(city) + "\t" + str(feature) + "\t" + str(float(city_feature[city][feature])/float(city_cnt[city])) + "\n";
-		fout.write(line);
+
+#for city in city_feature.keys():
+#	realcity.append(city);
+city = '319';
+for feature in city_feature[city].keys():
+	line = str(city) + "\t" + str(feature) + "\t" + str(float(city_feature[city][feature])/float(city_cnt[city])) + "\n";
+	fout.write(line);
 fout = open("existcity.100.txt","w");
 for city in realcity:
 	fout.write(str(city)+ "\n");
