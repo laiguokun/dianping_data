@@ -29,6 +29,12 @@ for line in fin:
 			item[tmp["0"]] = tmp ["2"];
 	cnt += 1;
 
+fin = open("city_cnt.txt");
+city_cnt = {}
+for line in fin:
+	words = line[0:-1].split('\t');
+	city_cnt[words[0]] = words[1];
+	
 fin = open("reviews.txt", "r", encoding = "utf8");
 fout_feature = open("info_city.txt","w");
 user_home = {};
@@ -38,7 +44,6 @@ jsondist = [];
 cnt = 0;
 cnt2 = 0;
 print (len(item));
-city_cnt = {};
 for line in fin:
 	ff = line.split('^');
 	word = "";
@@ -84,7 +89,4 @@ print("cnt2:"+str(cnt));
 fout= open("item_home.txt", "w");
 for item in item_home.keys():
 	fout.write(str(item) + '\t' + str(item_home[item]) + '\n');
-fout = open("city_cnt.txt", 'w');
-for city in city_cnt.keys():
-	fout.write(str(city) + '\t' + str(city_cnt[city]) + '\n');
 print(cnt);
