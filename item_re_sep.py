@@ -4,7 +4,7 @@ for line in fin:
 	words = line[0:-1].split('\t');
 	user_home[words[0]] = words[1];
 
-fin = open("info_city.txt", "r")
+fin = open("info_city_before.txt", "r")
 fout = open("train_info.txt", "w");
 fout_test = open("test_info.txt","w");
 user_cnt = {}
