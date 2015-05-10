@@ -1,4 +1,4 @@
-fin = open("info_city.txt");
+fin = open("info_city_before.txt");
 fout = open("user_home.txt","w");
 user_city = {};
 for line in fin:
@@ -16,4 +16,8 @@ for user in user_city.keys():
 		if (user_city[user][city] > max):
 			max = user_city[user][city];
 			max_aug = city;
+			if (user =='77701'):
+				print (city + '\t' +str(user_city[user][city]))
+	if (user == '77701'):
+		print(max_aug);
 	fout.write(user + '\t' + max_aug + '\n');
